@@ -3,9 +3,12 @@
 namespace App\Controller\Gite;
 
 use App\Entity\Gite;
+use App\Entity\GiteSearch;
+use App\Form\GiteSearchType;
 use App\Repository\GiteRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class GiteController extends AbstractController
 {
@@ -25,10 +28,16 @@ class GiteController extends AbstractController
     /**
      * @Route("/gites", name="gite.index")
      */
-    public function gites()
+    public function gites(Request $request)
     {
-        $gites = $this->repo->findAll();
-        return $this->render('gite/index.html.twig', ['gites' => $gites]);
+        $search = new GiteSearch();
+        $form = $this->createForm(GiteSearchType::class, $search);
+        $form->handleRequest($request);
+        $gites = $this->repo->findAllGiteSearch($search);
+        return $this->render('gite/index.html.twig', [
+            'gites' => $gites,
+            'form' => $form->createView(),
+        ]);
     }
     /**
      * @Route ("/gite/{id}", name = "gite.show")
