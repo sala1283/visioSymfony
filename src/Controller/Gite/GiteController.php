@@ -15,9 +15,17 @@ class GiteController extends AbstractController
         $this->repo = $repo;
     }
     /**
-     * @Route("/gites", name="gite.index")
+     * @Route("/", name="home")
      */
     public function index()
+    {
+        $gites = $this->repo->findLastGite();
+        return $this->render('home/index.html.twig', ['gites' => $gites]);
+    }
+    /**
+     * @Route("/gites", name="gite.index")
+     */
+    public function gites()
     {
         $gites = $this->repo->findAll();
         return $this->render('gite/index.html.twig', ['gites' => $gites]);

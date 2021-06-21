@@ -24,6 +24,14 @@
 <td>Refuser</td>
 {% endif %}
 </tr>
+<tr>
+<th>Equipements</th>
+<td>
+<ul>{% for eq in gite.equipements %}
+<li>{{eq.name}}</li>
+{% endfor %}
+</ul>
+</td></tr>
 </tbody>
 </table>
 </div>

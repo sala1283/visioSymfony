@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Equipement;
 use App\Entity\Gite;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +25,12 @@ class GiteType extends AbstractType
             ->add('address', TextType::class, ['required' => false])
             ->add('city', TextType::class, ['required' => false])
             ->add('postale_code', TextType::class, ['required' => false])
-            ->add('animals', CheckboxType::class, ['required' => false]);
+            ->add('animals', CheckboxType::class, ['required' => false])
+            ->add('equipements', EntityType::class, [
+                'class' => Equipement::class,
+                'choice_label' => 'name',
+                'multiple' => true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
