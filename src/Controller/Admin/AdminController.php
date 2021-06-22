@@ -7,6 +7,7 @@ use App\Form\GiteType;
 use App\Repository\GiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -43,5 +44,20 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin.index');
         }
         return $this->render('admin/new.html.twig', ["formGite" => $form->createView()]);
+    }
+    /**
+     * @Route("/admin/{id}/edit", name="admin.edit")
+     */
+    public function edit(Gite $gite, Request $request): Response
+    {
+        $form = $this->createForm(GiteType::class, $gite);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $this->em->flush();
+            $this->addFlash("success", "Le Gite a bien été mis à jour");
+            return $this->redirectToRoute('admin.index');
+        }
+        return $this->render('admin/edit.html.twig', ["formGite" => $form->createView()]);
     }
 }

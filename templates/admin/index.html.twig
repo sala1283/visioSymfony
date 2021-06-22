@@ -19,7 +19,7 @@
 <tr>
 <th>#{{gite.id}}</th>
 <th>{{gite.name}}</th>
-<th><a href class= "btn btn-primary">Editer</a></th>
+<th><a href="{{path('admin.edit', {"id":gite.id})}}" class= "btn btn-primary">Editer</a></th>
 </tr>
 {% endfor %}
 </tbody>
