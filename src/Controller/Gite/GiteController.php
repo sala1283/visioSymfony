@@ -6,9 +6,11 @@ use App\Entity\Gite;
 use App\Entity\GiteSearch;
 use App\Form\GiteSearchType;
 use App\Repository\GiteRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class GiteController extends AbstractController
 {

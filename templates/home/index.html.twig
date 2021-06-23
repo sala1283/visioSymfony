@@ -6,6 +6,7 @@
 {% for gite in gites %}
 <div class="col-md-4 mt-3">
 <div class="card" ">
+<img src="/images/gites/{{gite.imageName}}" class="card-img-top" alt="">
   <div class="card-body">
     <h5 class="card-title">{{gite.name}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{gite.createdAt|format_datetime()}}</h6>

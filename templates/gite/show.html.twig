@@ -6,6 +6,15 @@
 </div>
 <div class="row">
 <div class="col-md-6">
+{% if gite.imageName %}
+<img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="{{ gite.name }}">
+{% else %}
+<img src="images/img/home.jpg" class="card-img-top" alt="{{ gite.name }}">
+{% endif %}
+</div>
+<div class="col-md-6">
+<h2>Détails du gite:</h2>
+<p>{{gite.description}}</p>
 <table class="table table-striped">
 <tbody>
 <tr>

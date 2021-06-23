@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\GiteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\GiteRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=GiteRepository::class)
+ * @Vich\Uploadable
  */
 class Gite
 {
@@ -88,6 +92,27 @@ class Gite
      * @ORM\ManyToMany(targetEntity=Equipement::class, inversedBy="gites")
      */
     private $equipements;
+
+    /**
+     * @var File/null
+     * @Vich\UploadableField(mapping="gite_image", fileNameProperty="imageName")
+     */
+    private $imageFile;
+
+    /**
+     * @var string/null
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Image(
+     * mimeTypes="image/jpeg",
+     * mimeTypesMessage="Format invalid"
+     * )
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -229,6 +254,39 @@ class Gite
     public function removeEquipement(Equipement $equipement): self
     {
         $this->equipements->removeElement($equipement);
+
+        return $this;
+    }
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+        return $this;
+    }
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+    public function setImageFile(?File $file): self
+    {
+        $this->imageFile = $file;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }
