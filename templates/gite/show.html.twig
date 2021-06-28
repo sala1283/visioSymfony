@@ -1,8 +1,21 @@
 {% extends "base.html.twig" %}
 {% block title %} Le gite {% endblock %}
 {% block body %}
+<div class="p-5 mb-4 bg-light rounded-3">
+<div class="col-auto">
+<div class="container-fluid py-5">
+<h1 class="display-5 fw-bold">{{ gite.name }}</h1>
+<p class="fs-4">{{ gite.description }}</p>
+<button class="btn btn-success">Contact</button>
+{{form_start(form)}}
+{{form_rest(form)}}
+<button type="submit" class="btn btn-primary mt-3">Envoyer </button>
+{{form_end(form)}}
+
+</div>
+</div>
+</div>
 <div class="row">
-<h1>Le gite "{{gite.name}}"</h1>
 </div>
 <div class="row">
 <div class="col-md-6">
@@ -14,7 +27,6 @@
 </div>
 <div class="col-md-6">
 <h2>Détails du gite:</h2>
-<p>{{gite.description}}</p>
 <table class="table table-striped">
 <tbody>
 <tr>
