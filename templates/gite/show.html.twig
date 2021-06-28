@@ -6,11 +6,13 @@
 <div class="container-fluid py-5">
 <h1 class="display-5 fw-bold">{{ gite.name }}</h1>
 <p class="fs-4">{{ gite.description }}</p>
-<button class="btn btn-success">Contact</button>
+<button class="btn btn-success" id="contact">Contact</button>
+<div class="form-contact hidden">
 {{form_start(form)}}
 {{form_rest(form)}}
 <button type="submit" class="btn btn-primary mt-3">Envoyer </button>
 {{form_end(form)}}
+</div>
 
 </div>
 </div>

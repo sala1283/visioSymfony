@@ -1,0 +1,9 @@
+body {
+    background-color: lightgray;
+}
+.visible{
+    display: block;
+}
+.hidden{
+    display: none;
+}
