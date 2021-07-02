@@ -16,6 +16,7 @@ class GiteSearch
 
     private $minSurface;
     private $maxBedrooms;
+    private $city;
 
 
     /**
@@ -54,6 +55,26 @@ class GiteSearch
     public function setMaxBedrooms(int $maxBedrooms)
     {
         $this->maxBedrooms = $maxBedrooms;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of city
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set the value of city
+     *
+     * @return  self
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
 
         return $this;
     }

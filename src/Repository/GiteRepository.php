@@ -5,7 +5,9 @@ namespace App\Repository;
 use App\Entity\Gite;
 use App\Entity\GiteSearch;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Gite|null find($id, $lockMode = null, $lockVersion = null)
@@ -44,9 +46,15 @@ class GiteRepository extends ServiceEntityRepository
                 ->andWhere('g.bedrooms < :maxBedrooms')
                 ->setParameter('maxBedrooms', $search->getMaxBedrooms());
         }
+        if ($search->getCity()) {
+            $query = $query
+
+                ->andWhere('g.city = :city')
+                ->setParameter('city', $search->getCity());
+        }
+
         return $query->getQuery()->getResult();
     }
-
 
     /*
     public function findOneBySomeField($value): ?Gite

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AdminController extends AbstractController
 {
@@ -24,7 +25,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="admin.index")
      */
-    public function index()
+    public function index(): Response
     {
         $gites = $this->giteRepository->findAll();
         return $this->render('admin/index.html.twig', ["gites" => $gites]);
@@ -32,7 +33,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/new", name="admin.new")
      */
-    public function new(Request $request)
+    public function new(Request $request): Response
     {
         $gite = new Gite();
         $form = $this->createForm(GiteType::class, $gite);
@@ -59,5 +60,18 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin.index');
         }
         return $this->render('admin/edit.html.twig', ["formGite" => $form->createView()]);
+    }
+    /**
+     * @Route("/admin/{id}/delete", name="admin.delete")
+     */
+    public function delete(Gite $gite, Request $request): RedirectResponse
+    {
+        $form = $this->createForm(GiteType::class, $gite);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($gite);
+        $this->em->flush();
+        $this->addFlash("success", "Le Gite a bien été supprimé");
+        return $this->redirectToRoute('admin.index');
     }
 }

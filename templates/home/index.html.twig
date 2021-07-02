@@ -1,11 +1,11 @@
 {% extends  'base.html.twig' %}
-{% block title %} Bienvenue {% endblock %}
+{% block title %} Gites Progica {% endblock %}
 {% block  body %}
-<h1>Bienvenue sur mon site</h1>
+<h2 class="mt-5 mb-4">Gites Progica: La location de vacances de vos rêves</h2>
 <div class="row">
 {% for gite in gites %}
 <div class="col-md-4 mt-3">
-<div class="card" ">
+<div class="card" style="width: 18rem;">
 {% if gite.imageName %}
 <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="{{ gite.name }}">
 {% else %}
@@ -20,6 +20,6 @@
 </div>
 </div>
 {% endfor %}
-<a href="{{path('gite.index')}}" class="btn btn-success">Voir tous les gites</a>
+<a href="{{path('gite.index')}}" class="btn btn-success mt-2">Voir tous les gites</a>
 </div>
 {% endblock %}

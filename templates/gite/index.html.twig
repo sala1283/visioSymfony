@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
-{% block title %} Les gites PROGICA {% endblock %}
+{% block title %} Les gites PROGICA{% endblock %}
 {% block body %}
-<h1>Les gites disponibles</h1>
+<h1 class="mt-5 mb-4">Gites disponibles: {{ gites.getTotalItemCount }}</h1>
 <div class="row mt-3 mb-3">
 {{form_start(form)}}
 <div class="col-md-4">
@@ -20,7 +20,7 @@
 </div>
 <div class="row">
 {% for gite in gites %}
-<div class="col-md-4">
+<div class="col-md-4 mb-2 mt-2">
 <div class="card" style="width: 18rem;">
 {% if gite.imageName %}
 <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="{{ gite.name }}">
@@ -33,7 +33,8 @@
     <p class="card-text">{{gite.description}}
     <h6 class="card-subtitle mb-2 text-muted">
     Surface: {{gite.surface}}<br>
-    Bedrooms: {{gite.bedrooms}}
+    Bedrooms: {{gite.bedrooms}}<br>
+    Ville: {{gite.city}}
     </h6>
     </p>
     <a  class="btn btn-secondary" href="{{path('gite.show', {'id':gite.id})}}">Voir le gite</a>
@@ -41,5 +42,8 @@
 </div>
 </div>
 {% endfor %}
+</div>
+<div class="pagination mt-4">
+{{ knp_pagination_render(gites) }}
 </div>
 {% endblock %}

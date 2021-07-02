@@ -25,7 +25,7 @@ class GiteController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index()
+    public function index(): Response
     {
         $gites = $this->repo->findLastGite();
         return $this->render('home/index.html.twig', ['gites' => $gites]);
@@ -33,12 +33,18 @@ class GiteController extends AbstractController
     /**
      * @Route("/gites", name="gite.index")
      */
-    public function gites(Request $request)
+    public function gites(Request $request, PaginatorInterface $paginator): Response
     {
         $search = new GiteSearch();
         $form = $this->createForm(GiteSearchType::class, $search);
         $form->handleRequest($request);
         $gites = $this->repo->findAllGiteSearch($search);
+        $gites = $paginator->paginate(
+            $gites, /* query NOT result */
+
+            $request->query->getInt('page', 1)/*page number*/,
+            9/*limit per page*/
+        );
         return $this->render('gite/index.html.twig', [
             'gites' => $gites,
             'form' => $form->createView(),
@@ -47,7 +53,7 @@ class GiteController extends AbstractController
     /**
      * @Route ("/gite/{id}", name = "gite.show")
      */
-    public function show(Gite $gite, Request $request, ContactNotification $notification)
+    public function show(Gite $gite, Request $request, ContactNotification $notification): Response
     {
         //$gite = $this->repo->find($id);
         $contact = new Contact();
@@ -56,7 +62,7 @@ class GiteController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $notification->notify($contact);
-            $this->addFlash('Success', 'Votre email a bien été envoyé');
+            $this->addFlash('Success', 'Votre email a bien été envoy');
             return $this->redirectToRoute('gite.show', ['id' => $gite->getId()]);
         }
         return $this->render('gite/show.html.twig', ["gite" => $gite, "form" => $form->createView()]);

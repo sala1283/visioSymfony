@@ -22,7 +22,7 @@ class Gite
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,7 +34,7 @@ class Gite
      * maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
      */
-    private $name;
+    private string $name;
 
     /**
      * @ORM\Column(type="text")
@@ -46,7 +46,7 @@ class Gite
      * maxMessage = "Maximum {{ limit }} characters"
      * )
      */
-    private $description;
+    private string $description;
 
     /**
      * @ORM\Column(type="integer")
@@ -56,37 +56,37 @@ class Gite
      *      notInRangeMessage = "La surface doit être comprise entre {{ min }} et {{ max }} m²",
      * )
      */
-    private $surface;
+    private int $surface;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $bedrooms;
+    private string $bedrooms;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $address;
+    private string $address;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    private string $city;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $postale_code;
+    private string $postale_code;
 
     /**
      * @ORM\Column(type="boolean", options={"default":false})
      */
-    private $animals;
+    private bool $animals;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created_at;
+    private \DateTime $created_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipement::class, inversedBy="gites")
@@ -112,7 +112,17 @@ class Gite
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updated_at;
+    private \DateTime $updated_at;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=6)
+     */
+    private float $lat;
+
+    /**
+     * @ORM\Column(type="float", scale=4, precision=7)
+     */
+    private float $lng;
 
     public function __construct()
     {
@@ -150,7 +160,7 @@ class Gite
         return $this;
     }
 
-    public function getSurface(): ?int
+    public function getSurface()
     {
         return $this->surface;
     }
@@ -287,6 +297,30 @@ class Gite
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getLat(): ?float
+    {
+        return $this->lat;
+    }
+
+    public function setLat(float $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?float
+    {
+        return $this->lng;
+    }
+
+    public function setLng(float $lng): self
+    {
+        $this->lng = $lng;
 
         return $this;
     }

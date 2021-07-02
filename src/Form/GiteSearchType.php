@@ -6,8 +6,9 @@ use App\Entity\GiteSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class GiteSearchType extends AbstractType
 {
@@ -24,6 +25,8 @@ class GiteSearchType extends AbstractType
                 'label' => 'Nombre de chambres max'
 
             ])
+            ->add('city', TextType::class, ['required' => false, 'label' => 'Ville'])
+
             ->add('submit', SubmitType::class, []);
     }
 
